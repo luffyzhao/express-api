@@ -14,7 +14,7 @@ class Response
      */
     private $status;
     /**
-     * @var StreamInterface
+     * @var array
      * @author luffyzhao@vip.126.com
      */
     private $data;
@@ -24,7 +24,7 @@ class Response
      */
     private $message;
 
-    public function __construct(int $status, string $message, StreamInterface $data = null)
+    public function __construct(int $status, string $message, array $data = [])
     {
         $this->status = $status;
         $this->data = $data;
@@ -41,10 +41,10 @@ class Response
     }
 
     /**
-     * @return StreamInterface
+     * @return array
      * @author luffyzhao@vip.126.com
      */
-    public function getData(): ?StreamInterface
+    public function getData(): ?array
     {
         return $this->data;
     }

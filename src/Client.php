@@ -21,12 +21,20 @@ class Client
     }
 
     /**
-     * @return string
+     * @param Info $info
+     * @return Response
+     * @throws \Exception
      * @author luffyzhao@vip.126.com
      */
-    public function create($data)
+    public function create(Info $info)
     {
-        $create = $this->config->getNameSpace() . "\\Create";
-        return new $create($this->config, $data);
+        $create = str_replace('Config', 'Create', get_class($this->config));
+        if(class_exists($create)){
+            $object =  new $create($this->config, $info);
+            if($object instanceof OperateInterFace){
+                return $object->handle();
+            }
+        }
+        throw new \Exception('没有创建接口！');
     }
 }

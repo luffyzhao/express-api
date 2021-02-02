@@ -5,9 +5,4 @@ use LExpress\ConfigInterFace;
 
 class Config implements ConfigInterFace
 {
-
-    public function getNameSpace()
-    {
-
-    }
 }
