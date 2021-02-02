@@ -1,0 +1,25 @@
+{
+    "name": "luffyzhao/express-api",
+    "description": "laravel admin auth",
+    "authors": [
+        {
+            "name": "Luffy Zhao",
+            "email": "luffyzhao@vip.126.com"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "^7.0",
+        "pda/pheanstalk": "^4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "LExpress\\": "src/"
+        }
+    },
+    "repositories": {
+        "packagist": {
+            "type": "composer",
+            "url": "https://mirrors.aliyun.com/composer/"
+        }
+    }
+}
