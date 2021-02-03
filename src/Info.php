@@ -117,4 +117,15 @@ class Info
     public function getProductName(){
         return implode(array_column($this->products, 'name'), "  ");
     }
+
+    /**
+     * @param ProductInfo[] $products
+     * @return Info
+     * @author luffyzhao@vip.126.com
+     */
+    public function setProducts(array $products): Info
+    {
+        $this->products = $products;
+        return $this;
+    }
 }
