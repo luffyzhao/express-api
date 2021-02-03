@@ -8,7 +8,7 @@
         }
     ],
     "require": {
-        "guzzlehttp/guzzle": "^7.0",
+        "guzzlehttp/guzzle": ">=1.0",
         "pda/pheanstalk": "^4.0",
         "ramsey/uuid": "^4.1"
     },
