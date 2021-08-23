@@ -29,7 +29,7 @@ class Create implements OperateInterFace
      * @param Info $data
      * @author luffyzhao@vip.126.com
      */
-    public function __construct(Config $config, Info $data)
+    public function __construct(ConfigInterFace $config, Info $data)
     {
         $this->config = $config;
         $this->data = $data;
