@@ -45,7 +45,7 @@ class Request
             $response = $client->post($this->config->apiUrl, [
                 'form_params' => $params
             ]);
-echo json_encode($params);
+
             try {
                 $body = \GuzzleHttp\json_decode($response->getBody()->getContents(), true);
             } catch (GuzzleException $e) {
