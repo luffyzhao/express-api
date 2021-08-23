@@ -9,5 +9,5 @@ class Config implements ConfigInterFace
     public $companyId = '';
     public $key = '';
     public $platformSource;
-    public $warehouseCode;
+    public $warehouseCode = '';
 }
