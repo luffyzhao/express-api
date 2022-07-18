@@ -12,9 +12,7 @@ include_once __DIR__ . '/vendor/autoload.php';
 
 $sfConfig = new Config();
 $sfConfig->partnerID = '';
-
 $sfConfig->checkword = '';
-
 $sfConfig->monthlyCard = '';
 
 $client = new Client($sfConfig);
