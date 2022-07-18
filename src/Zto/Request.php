@@ -41,7 +41,6 @@ class Request
 
         try {
             $params = $this->getBody($content, $name);
-
             $response = $client->post($this->config->apiUrl, [
                 'form_params' => $params
             ]);
