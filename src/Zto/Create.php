@@ -130,4 +130,9 @@ class Create implements OperateInterFace
             'companyCode' => $this->data->getOrder()->port,//批次号 Y/N
         ];
     }
+
+    public function getBody()
+    {
+        return $this->importBbcOrderReqBO();
+    }
 }

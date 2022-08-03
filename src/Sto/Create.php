@@ -151,4 +151,8 @@ class Create implements OperateInterFace
         ];
     }
 
+    public function getBody()
+    {
+        return $this->getContent();
+    }
 }

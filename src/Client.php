@@ -37,4 +37,15 @@ class Client
         }
         throw new \Exception('没有创建接口！');
     }
+
+    public function getBody($info){
+        $create = str_replace('Config', 'Create', get_class($this->config));
+        if(class_exists($create)){
+            $object =  new $create($this->config, $info);
+            if($object instanceof OperateInterFace){
+                return $object->getBody();
+            }
+        }
+        throw new \Exception('没有创建接口！');
+    }
 }

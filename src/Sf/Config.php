@@ -19,6 +19,8 @@ class Config implements ConfigInterFace
     // 生产环境的地址
     public $prodUrl = 'https://sfapi.sf-express.com/std/service';
 
+    public $expressTypeId = 247;
+    public $isGenWaybillNo = 0;
     /**
      * @return string
      */

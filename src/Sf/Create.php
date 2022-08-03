@@ -35,16 +35,7 @@ class Create implements OperateInterFace
     public function handle(): Response
     {
         try {
-            $timestamp = time();
-            $msgData = \GuzzleHttp\json_encode($this->getMsgData());
-            $postData = [
-                'partnerID' => $this->config->partnerID,
-                'requestID' => $this->createUuid(),
-                'serviceCode' => 'EXP_RECE_CREATE_ORDER',
-                'timestamp' => $timestamp,
-                'msgDigest' => $this->msgDigest($msgData, $timestamp),
-                'msgData' => $msgData
-            ];
+            $postData = $this->getBody();
 
             $resultCont = $this->sendPost($this->config->getUrl(), $postData);
 
@@ -131,23 +122,19 @@ class Create implements OperateInterFace
                 'city' => $this->data->getReceiver()->city,
                 'contact' => $this->data->getReceiver()->name,
                 'contactType' => 2,
-                'county' => $this->data->getReceiver()->area,
+                'county' => $this->data->getReceiver()->area,//
                 'province' => $this->data->getReceiver()->province,
                 'mobile' => $this->data->getReceiver()->mobile
             ]],
-            'customsInfo' => [
-                'declaredValue' => $this->data->getProductPrice(),
-                'declaredValueCurrency' => 'CNY',
-            ],
-            'expressTypeId' => '',
-            'extraInfoList' => '',
-            'isOneselfPickup' => '',
+            'expressTypeId' => $this->config->expressTypeId,
+            'isGenWaybillNo' => $this->config->isGenWaybillNo,
             'language' => 'zh-CN',
             'monthlyCard' => $this->config->monthlyCard,
             'orderId' => $this->data->getOrder()->code,
-            'parcelQty' => 1,
-            'payMethod' => 1,
-            'totalWeight' => $this->data->getProductWeight(),
+            'waybillNoInfoList' => [[
+                'waybillNo' => $this->data->getOrder()->waybill,
+                'waybillType' => 1
+            ]]
         ];
     }
 
@@ -163,10 +150,23 @@ class Create implements OperateInterFace
                 'count' => $product->qty,
                 'name' => $product->name,
                 'unit' => "个",
-                'volume' => 0.0,
                 'weight' => $product->weight,
             ];
         }
         return $products;
+    }
+
+    public function getBody()
+    {
+        $timestamp = time();
+        $msgData = \GuzzleHttp\json_encode($this->getMsgData(), JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
+        return [
+            'partnerID' => $this->config->partnerID,
+            'requestID' => $this->createUuid(),
+            'serviceCode' => 'EXP_RECE_CREATE_ORDER',
+            'timestamp' => $timestamp,
+            'msgDigest' => $this->msgDigest($msgData, $timestamp),
+            'msgData' => $msgData
+        ];
     }
 }
