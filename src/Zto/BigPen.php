@@ -5,6 +5,7 @@ namespace LExpress\Zto;
 
 
 use LExpress\Info;
+use Ramsey\Uuid\Uuid;
 
 class BigPen
 {
@@ -33,18 +34,19 @@ class BigPen
     {
 
         $data = [
-            'SenderProvince' => $info->getReceiver()->province,//发件省	   N
-            'SenderCity' => $info->getReceiver()->city,//发件市	N
-            'SenderDistrict' => $info->getReceiver()->area,//发件区(县/镇)	N
-            'SenderAddress' => $info->getReceiver()->address,//发件详细地址	N
-            'BuyerProvince' => $info->getSender()->province,//收件省	N
-            'BuyerCity' => $info->getSender()->city,//收件市	N
-            'BuyerDistrict' => $info->getSender()->area,//收件区(县/镇)	N
-            'BuyerAddress' => $info->getSender()->address,//收件详细地址	N
+            'unionCode' => Uuid::uuid1()->toString(), //唯一标示	   N
+            'send_province' => $info->getReceiver()->province,//发件省	   N
+            'send_city' => $info->getReceiver()->city,//发件市	N
+            'send_district' => $info->getReceiver()->area,//发件区(县/镇)	N
+            'send_address' => $info->getReceiver()->address,//发件详细地址	N
+            'receive_district' => $info->getSender()->province,//收件省	N
+            'receive_city' => $info->getSender()->city,//收件市	N
+            'receive_province' => $info->getSender()->area,//收件区(县/镇)	N
+            'receive_address' => $info->getSender()->address,//收件详细地址	N
         ];
         $jsonData = json_encode($data);
 
         $request = new Request($this->config);
-        return $request->handle($jsonData, 'zto.intl.getdatoubi');
+        return $request->handle($jsonData, 'zto.innovate.bagAddrMark');
     }
 }

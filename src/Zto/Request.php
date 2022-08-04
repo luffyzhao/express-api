@@ -8,6 +8,9 @@ use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use LExpress\Response;
+use LExpress\Zto\SDK\ZopClient;
+use LExpress\Zto\SDK\ZopProperties;
+use LExpress\Zto\SDK\ZopRequest;
 use Throwable;
 
 class Request
@@ -36,28 +39,22 @@ class Request
      */
     public function handle($content, $name)
     {
-        /** @var  $client */
-        $client = new Client();
-
         try {
-            $params = $this->getBody($content, $name);
-            $response = $client->post($this->config->apiUrl, [
-                'form_params' => $params
-            ]);
-
+            $properties = new ZopProperties("kfpttestCode", "kfpttestkey==");
+            $client = new ZopClient($properties);
+            $request = new ZopRequest();
+            $request->setUrl($this->config->apiUrl . $name);
+            $request->setBody($content);
             try {
-                $body = \GuzzleHttp\json_decode($response->getBody()->getContents(), true);
-            } catch (GuzzleException $e) {
-                throw new Exception($response->getBody()->getContents());
+                $response = \GuzzleHttp\json_decode($client->execute($request));
+            }catch (Exception $exception){
+
             }
 
-            if ($response->getStatusCode() === 200 && $body['status'] === true) {
-                return new Response(1, '成功', $body);
-            } else {
-                return new Response(0, '失败', $body);
-            }
-        } catch (Throwable | Exception $e) {
-            return new Response(0, '请求失败:' . $e->getMessage());
+
+
+        }catch (Exception $exception){
+
         }
     }
 

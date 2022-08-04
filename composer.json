@@ -1,26 +1,27 @@
 {
-    "name": "luffyzhao/express-api",
-    "description": "laravel admin auth",
-    "authors": [
-        {
-            "name": "Luffy Zhao",
-            "email": "luffyzhao@vip.126.com"
-        }
-    ],
-    "require": {
-        "guzzlehttp/guzzle": ">=1.0",
-        "ramsey/uuid": ">=1.0",
-      "ext-json": "*"
-    },
-    "autoload": {
-        "psr-4": {
-            "LExpress\\": "src/"
-        }
-    },
-    "repositories": {
-        "packagist": {
-            "type": "composer",
-            "url": "https://mirrors.aliyun.com/composer/"
-        }
+  "name": "luffyzhao/express-api",
+  "description": "laravel admin auth",
+  "authors": [
+    {
+      "name": "Luffy Zhao",
+      "email": "luffyzhao@vip.126.com"
     }
+  ],
+  "require": {
+    "guzzlehttp/guzzle": ">=1.0",
+    "ramsey/uuid": ">=1.0",
+    "ext-json": "*",
+    "ext-curl": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "LExpress\\": "src/"
+    }
+  },
+  "repositories": {
+    "packagist": {
+      "type": "composer",
+      "url": "https://mirrors.aliyun.com/composer/"
+    }
+  }
 }
