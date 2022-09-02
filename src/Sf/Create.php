@@ -35,20 +35,10 @@ class Create implements OperateInterFace
     public function handle(): Response
     {
         try {
-            $postData = $this->getBody();
 
-            $resultCont = $this->sendPost($this->config->getUrl(), $postData);
+            $request = new Request($this->config);
+            return $request->handle($this->getBody());
 
-            if ($resultCont['apiResultCode'] === 'A1000') {
-                $resultContData = \GuzzleHttp\json_decode($resultCont['apiResultData'], true);
-                if($resultContData['success'] === true){
-                    return new Response(1, '成功', $resultContData);
-                }else{
-                    return new Response(0, $resultCont['apiErrorMsg'], $resultContData);
-                }
-            } else {
-                return new Response(0, $resultCont['apiErrorMsg'], $resultCont);
-            }
         } catch (\Exception|\Throwable $exception) {
             return new Response(0, $exception->getMessage(), []);
         }
@@ -156,6 +146,9 @@ class Create implements OperateInterFace
         return $products;
     }
 
+    /**
+     * @return array
+     */
     public function getBody()
     {
         $timestamp = time();

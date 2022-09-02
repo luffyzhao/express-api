@@ -1,89 +1,116 @@
 <?php
 
-
 namespace LExpress\Zto;
 
-
-use Exception;
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
 use LExpress\Response;
-use LExpress\Zto\SDK\ZopClient;
-use LExpress\Zto\SDK\ZopProperties;
-use LExpress\Zto\SDK\ZopRequest;
-use Throwable;
 
 class Request
 {
     /**
      * @var Config
-     * @author luffyzhao@vip.126.com
      */
     private $config;
 
+    private $timestamp;
+
     /**
-     * Request constructor.
      * @param Config $config
-     * @author luffyzhao@vip.126.com
      */
     public function __construct(Config $config)
     {
         $this->config = $config;
+        $this->timestamp = time() . "000";
     }
 
     /**
-     * @param $content
+     * @param array $content
      * @param $name
-     * @return Response|void
-     * @author luffyzhao@vip.126.com
+     * @return Response
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function handle($content, $name)
+    public function handle(array $content, $name)
     {
-        try {
-            $properties = new ZopProperties("kfpttestCode", "kfpttestkey==");
-            $client = new ZopClient($properties);
-            $request = new ZopRequest();
-            $request->setUrl($this->config->apiUrl . $name);
-            $request->setBody($content);
-            try {
-                $response = \GuzzleHttp\json_decode($client->execute($request));
-            }catch (Exception $exception){
+        /** @var  $client */
+        $client = new Client();
+        $params = $this->getBody($content);
 
-            }
+        $response = $client->request('POST', $this->getUrl($name), [
+            'body' => $params
+        ]);
 
-
-
-        }catch (Exception $exception){
-
+        $result = \GuzzleHttp\json_decode($response->getBody()->getContents(), true);
+        if($result['success']){
+            $result['data'] = $this->decrypt($result['data']);
+            return new Response(0, '成功', $result);
         }
+
+        return new Response(1, $result['error']['message'], $result);
     }
 
     /**
-     * @param $content
-     * @param string $name
-     * @return array
-     * @author luffyzhao@vip.126.com
+     * @param array $content
+     * @return string
      */
-    protected function getBody(string $content, string $name)
+    private function getBody(array $content)
     {
-        return $sendData = [
-            'data' => $content,
-            'msg_type' => $name,
-            'data_digest' => $this->getSign($content),
-            'company_id' => $this->config->companyId
+        $data = \GuzzleHttp\json_encode($content, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
+        $body = [
+            'data' => $data,
+            'sign' => $this->getSign(\GuzzleHttp\json_encode($content, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE))
         ];
+        return $this->encrypt(\GuzzleHttp\json_encode($body));
     }
 
     /**
-     * Note: 生成签名数据
-     * User: Yao
-     * Date: 2018/12/10
-     * Time: 14:19
+     * @param string $content
+     * @return string
+     */
+    private function getSign(string $content): string
+    {
+        $sign = $this->timestamp . $this->config->secretKey . $content;
+        return md5($sign);
+    }
+
+    /**
+     * @param $name
+     * @return string
+     */
+    private function getUrl($name)
+    {
+        return sprintf('%s?method=%s&timestamp=%s&appCode=%s', $this->config->url, $name, $this->timestamp, $this->config->appcode);
+    }
+
+    /**
+     * @return string
+     */
+    private function iv()
+    {
+        $ivArr = [0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF];
+        $iv = '';
+        foreach ($ivArr as $value) {
+            $iv .= chr($value);
+        }
+        return $iv;
+    }
+
+    /**
+     * 加密消息体
+     * @param $text
+     * @return string
+     */
+    private function encrypt($text)
+    {
+        return base64_encode(openssl_encrypt($text, 'DES-CBC', $this->config->secretKey, OPENSSL_RAW_DATA, $this->iv()));
+    }
+
+    /**
+     * @desc 解密
      * @param $data
      * @return string
      */
-    protected function getSign($data)
+    private function decrypt($data)
     {
-        return base64_encode(pack('H*', md5($data . $this->config->key)));
+        return openssl_decrypt(base64_decode($data), 'DES-CBC', $this->config->secretKey, OPENSSL_RAW_DATA, $this->iv());
     }
 }

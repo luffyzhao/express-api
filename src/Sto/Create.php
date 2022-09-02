@@ -42,7 +42,7 @@ class Create implements OperateInterFace
     public function handle(): Response
     {
         $request = new Request($this->config);
-        return $request->handle(json_encodeAlias($this->getContent()), ApiName::CREATE);
+        return $request->handle(json_encodeAlias($this->getContent()), 'OMS_EXPRESS_ORDER_CREATE');
     }
 
 

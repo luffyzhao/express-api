@@ -4,7 +4,7 @@
 namespace LExpress\Info;
 
 
-class SenderInfo
+class SenderInfo extends AbstractInfo
 {
     /** @var string 姓名 */
     public $name = '';

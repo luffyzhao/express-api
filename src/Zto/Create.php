@@ -1,32 +1,27 @@
 <?php
 
-
 namespace LExpress\Zto;
-
 
 use LExpress\ConfigInterFace;
 use LExpress\Info;
 use LExpress\OperateInterFace;
 use LExpress\Response;
+use Ramsey\Uuid\Uuid;
 
 class Create implements OperateInterFace
 {
     /**
      * @var Config
-     * @author luffyzhao@vip.126.com
      */
     private $config;
     /**
      * @var Info
-     * @author luffyzhao@vip.126.com
      */
     private $data;
 
     /**
-     * Create constructor.
-     * @param Config $config
+     * @param ConfigInterFace $config
      * @param Info $data
-     * @author luffyzhao@vip.126.com
      */
     public function __construct(ConfigInterFace $config, Info $data)
     {
@@ -36,103 +31,130 @@ class Create implements OperateInterFace
 
     /**
      * @return Response
-     * @author luffyzhao@vip.126.com
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function handle(): Response
     {
-        $dataJson = $this->importBbcOrderReqBO();
-        $request = new Request($this->config);
-        return $request->handle(json_encode($dataJson), 'zto.intlbillorder.insert');
-    }
-
-
-
-    /**
-     * @return array
-     * @author luffyzhao@vip.126.com
-     */
-    protected function importBbcOrderReqBO()
-    {
-        return [
-            'logisticsno' => $this->data->getOrder()->waybill,
-            'orderno' => $this->data->getOrder()->code,
-            'shipper' => $this->data->getSender()->name,
-            'shipperprov' => $this->data->getSender()->province,
-            'shippercity' => $this->data->getSender()->city,
-            'shipperdistrict' => $this->data->getSender()->area,
-            'shipperaddress' => $this->data->getSender()->address,
-            'shippermobile' => $this->data->getSender()->mobile,
-            'shippertelephone' => '',
-            'shippercountry' => "中国",
-            'consignee' => $this->data->getReceiver()->name,
-            'consigneeprov' => $this->data->getReceiver()->province,
-            'consigneecity' => $this->data->getReceiver()->city,
-            'consigneedistrict' => $this->data->getReceiver()->area,
-            'consigneeaddress' => $this->data->getReceiver()->address,
-            'consigneemobile' => $this->data->getReceiver()->mobile,
-            'consigneetelephone' => '',
-            'consigneecountry' => "中国",
-            'idtype' => "1",
-            'customerid' => $this->data->getOrder()->idNumber,
-            'weight' => $this->data->getProductWeight() + 0.3,
-            'ietype' => "I",
-            'stockflag' => 2,
-            'cumstomscode' => 'GZCUSTOMS',
-            'platformSource' => $this->config->platformSource,
-            'sortContent' => 'Y',
-            'netweight' => $this->data->getProductWeight(),
-            'shippingFee' => '',
-            'shippingFeeUnit' => '',
-            'insuranceFee' => '',
-            'insuranceFeeUnit' => '',
-            'shipType' => 'W',
-            'warehouseCode' => $this->config->warehouseCode,
-            'totallogisticsno' => '',
-            'billEntity' => $this->billEntity(),
-            'intlOrderItemList' => $this->intlOrderItemList(),
-        ];
-    }
-
-    /**
-     * @return array
-     * @author luffyzhao@vip.126.com
-     */
-    protected function intlOrderItemList()
-    {
-        $array = [];
-        foreach ($this->data->getProducts() as $product) {
-            $array[] = [
-                'itemId' => $product->id,
-                'itemName' => $product->name,
-                'itemUnitPrice' => $product->price,
-                'itemQuantity' => $product->qty,
-                'currencyType' => 'CNY',
-            ];
+        $verify = $this->verifyBigBen();
+        if ($verify->getStatus() === 0) {
+            $request = new Request($this->config);
+            $res = $request->handle($this->getBody(), 'addBbcImportOrder');
+            if($res->getStatus() === 0){
+                $data = [
+                    'bigBen' => $verify->getData(),
+                    'order' =>$res->getData()
+                ];
+                $res->setData($data);
+                return $res;
+            }
+            return $res;
         }
-        return $array;
+        return $verify;
     }
 
     /**
-     * 清关信息
-     * @return array
-     * @author luffyzhao@vip.126.com
+     * @return Response
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function billEntity()
+    private function verifyBigBen()
+    {
+        $request = new Request($this->config);
+        return $request->handle($this->bigBenBody(), 'queryBigMark');
+    }
+
+    /**
+     * @return array
+     */
+    private function bigBenBody()
     {
         return [
-            'ecpcode' => $this->data->getOrder()->ecp_code,
-            'ecpname' => $this->data->getOrder()->ecp_name,
-            'ecpcodeG' => '44199669AK',
-            'ecpnameG' => '广东跨境达商贸有限公司',
-            'quantity' => 1,//数量(不可为0,对应总署包裹数) N
-            'wraptype' => '2',//包装种类(参考数据字典包装种类) N
-            'batchnumbers' => '',//批次号 Y/N
-            'companyCode' => $this->data->getOrder()->port,//批次号 Y/N
+            'receiverAddress' => [
+                'province' => $this->data->getReceiver()->province,
+                'city' => $this->data->getReceiver()->city,
+                'district' => $this->data->getReceiver()->area,
+                'address' => $this->data->getReceiver()->address,
+            ],
+            'senderAddress' => [
+                'province' => $this->data->getSender()->province,
+                'city' => $this->data->getReceiver()->city,
+                'district' => $this->data->getReceiver()->area,
+                'address' => $this->data->getReceiver()->address,
+            ],
+            'unionCode' => Uuid::uuid1()->toString()
         ];
     }
 
+    /**
+     * @return array
+     */
     public function getBody()
     {
-        return $this->importBbcOrderReqBO();
+        $order = $this->data->getOrder();
+        $sender = $this->data->getSender();
+        $receiver = $this->data->getReceiver();
+        $body = [
+            'logisticsId' => $order->waybill,
+            'orderId' => $order->code,
+            'shipper' => $sender->name,
+            'shipperProv' => $sender->province,
+            'shipperCity' => $sender->city,
+            'shipperDistrict' => $sender->area,
+            'shipperAddress' => $sender->address,
+            'shipperMobile' => $sender->mobile,
+            'shipperTelephone' => '',
+            'shipperCountry' => '中国',
+
+            'consignee' => $receiver->name,
+            'consigneeProv' => $receiver->province,
+            'consigneeCity' => $receiver->city,
+            'consigneeDistrict' => $receiver->area,
+            'consigneeAddress' => $receiver->address,
+            'consigneeMobile' => $receiver->mobile,
+            'consigneeTelephone' => '',
+            'consigneeCountry' => '中国',
+            'idType' => 1,
+            'customerId' => $order->extra['id_number'] ?? "",
+            'shippingFee' => 0,
+            'shippingFeeUnit' => '',
+            'weight' => $this->data->getProductWeight(),
+            'ieType' => 'I',
+            'stockFlag' => 2,
+            'customsCode' => $this->config->customsCode,
+            'platformSource' => $this->config->platformSource,
+            'sortContent' => '',
+            'needBigMark' => 0,
+            'netWeight' => $this->data->getProductWeight() - 0.01,
+            'shipType' => '2',
+            'warehouseCode' => $this->config->warehouseCode,
+            'totalLogisticsNo' => '',
+            'flightCode' => '',
+            'userId' => '',
+            'remark' => '',
+            'intlOrderItemList' => [],
+            'billEntity' => [
+                'quantity' => 1,
+                'ecpCode' => $order->extra['ecpCode'] ?? "",
+                'ecpName' => $order->extra['ecpName'] ?? "",
+                'ecpCodeG' => $order->extra['ecpCodeG'] ?? "",
+                'ecpNameG' => $order->extra['ecpNameG'] ?? "",
+                'wrapType' => 2,
+                'companyCode' => $order->extra['companyCode'] ?? "",
+            ],
+        ];
+        foreach ($this->data->getProducts() as $key => $product) {
+            $body['intlOrderItemList'][$key] = [
+                'itemId' => $key + 1,
+                'itemName' => $product['name'],
+                'itemUnitPrice' => $product->price,
+                'itemQuantity' => $product->qty,
+                'itemWeight' => $product->weight,
+                'dutyMoney' => '0',
+                'blInsure' => '0',
+                'currencyType' => '142',
+                'itemUnit' => '',
+            ];
+        }
+
+        return $body;
     }
 }
