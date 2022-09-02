@@ -2,9 +2,9 @@
 
 namespace LExpress\Sf;
 
-use LExpress\ConfigInterFace;
+use LExpress\AbstractConfig;
 
-class Config implements ConfigInterFace
+class Config extends AbstractConfig
 {
     // 此处替换为您在丰桥平台获取的顾客编码
     public $partnerID = '';

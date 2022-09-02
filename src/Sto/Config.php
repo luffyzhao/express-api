@@ -1,9 +1,10 @@
 <?php
 namespace LExpress\Sto;
 
+use LExpress\AbstractConfig;
 use LExpress\ConfigInterFace;
 
-class Config implements ConfigInterFace
+class Config extends AbstractConfig
 {
     /** @var string 结构化的业务报文体，可以是JSON或XML格式的字串（见下文表格及示例） */
     public $fromAppKey = 'sto_intl_test';
@@ -41,6 +42,4 @@ class Config implements ConfigInterFace
     ];
     /** @var int 支付方式（1-现付；2-到付；3-月结） */
     public $payModel = 3;
-
-
 }

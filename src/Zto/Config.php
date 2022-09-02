@@ -2,9 +2,9 @@
 
 namespace LExpress\Zto;
 
-use LExpress\ConfigInterFace;
+use LExpress\AbstractConfig;
 
-class Config implements ConfigInterFace
+class Config extends AbstractConfig
 {
     public $appcode = 10676;
     public $secretKey = '7r*cQSA#';
