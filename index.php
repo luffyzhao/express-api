@@ -17,7 +17,7 @@ $client = new Client($sfConfig);
 $order = new Info\OrderInfo();
 $order->code = time();
 
-$order->id_number = '430423199104034713';
+$order->id_number = '4304231977040345521';
 
 $product = new Info\ProductInfo();
 $product->weight = 0.4;
