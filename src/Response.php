@@ -9,7 +9,7 @@ use Psr\Http\Message\StreamInterface;
 class Response
 {
     /**
-     * @var int
+     * @var bool
      * @author luffyzhao@vip.126.com
      */
     private $status;
@@ -38,10 +38,10 @@ class Response
     }
 
     /**
-     * @return int
+     * @return bool
      * @author luffyzhao@vip.126.com
      */
-    public function getStatus(): int
+    public function getStatus(): bool
     {
         return $this->status;
     }
@@ -83,8 +83,16 @@ class Response
     /**
      * @param mixed $code
      */
-    public function setCode($code)
+    public function setCode(?string $code)
     {
         $this->code = $code;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCode(): string
+    {
+        return $this->code;
     }
 }
