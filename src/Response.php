@@ -24,11 +24,17 @@ class Response
      */
     private $message;
 
-    public function __construct(int $status, string $message, array $data = [])
+    /**
+     * @var string
+     */
+    private $code;
+
+    public function __construct(bool $status, string $message = '', array $data = [], string $code = '')
     {
         $this->status = $status;
         $this->data = $data;
         $this->message = $message;
+        $this->code = $code;
     }
 
     /**
@@ -64,5 +70,21 @@ class Response
     public function setData(array $data): void
     {
         $this->data = $data;
+    }
+
+    /**
+     * @param array $data
+     * @return void
+     */
+    public function addData(array $data){
+        $this->data = array_merge($this->data, $data);
+    }
+
+    /**
+     * @param mixed $code
+     */
+    public function setCode($code)
+    {
+        $this->code = $code;
     }
 }

@@ -41,11 +41,10 @@ class Request
 
         $result = \GuzzleHttp\json_decode($response->getBody()->getContents(), true);
         if($result['success']){
-            $result['data'] = $this->decrypt($result['data']);
-            return new Response(0, '成功', $result);
+            return new Response(true, '成功', \GuzzleHttp\json_decode($this->decrypt($result['data']), true));
         }
 
-        return new Response(1, $result['error']['message'], $result);
+        return new Response(false, $result['error']['message'], $result);
     }
 
     /**

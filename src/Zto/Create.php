@@ -36,15 +36,12 @@ class Create implements OperateInterFace
     public function handle(): Response
     {
         $verify = $this->verifyBigBen();
-        if ($verify->getStatus() === 0) {
+        if ($verify->getStatus()) {
             $request = new Request($this->config);
             $res = $request->handle($this->getBody(), 'addBbcImportOrder');
-            if($res->getStatus() === 0){
-                $data = [
-                    'bigBen' => $verify->getData(),
-                    'order' =>$res->getData()
-                ];
-                $res->setData($data);
+            if($res->getStatus()){
+                $res->addData($verify->getData());
+                $res->setCode($res->getData()['logisticsId']);
                 return $res;
             }
             return $res;

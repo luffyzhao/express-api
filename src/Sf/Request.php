@@ -41,12 +41,12 @@ class Request
         if ($result['apiResultCode'] === 'A1000') {
             $resultContData = \GuzzleHttp\json_decode($result['apiResultData'], true);
             if($resultContData['success'] === true){
-                return new Response(1, '成功', $resultContData);
+                return new Response(true, '成功', $resultContData);
             }else{
-                return new Response(0, $result['apiErrorMsg'], $resultContData);
+                return new Response(false, $result['apiErrorMsg'], $resultContData);
             }
         } else {
-            return new Response(0, $result['apiErrorMsg'], $result);
+            return new Response(false, $result['apiErrorMsg'], $result);
         }
     }
 }

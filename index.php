@@ -5,12 +5,15 @@ use LExpress\Info;
 use LExpress\Info\ProductInfo;
 use LExpress\Info\ReceiverInfo;
 use LExpress\Info\SenderInfo;
-use LExpress\Zto\Config;
+use LExpress\Sf\Config;
 use LExpress\Zto\Create;
 
 include_once __DIR__ . '/vendor/autoload.php';
 
 $sfConfig = new Config();
+$sfConfig->partnerID = 'BLGYLNVsNVjG';
+$sfConfig->checkword = 'WpRXatmIY1c8mGeDmnjudsGiF7h9i6gh';
+$sfConfig->monthlyCard = '7551234567';
 
 $client = new Client($sfConfig);
 
@@ -49,4 +52,4 @@ $info->setSender($senderInfo);
 
 $response = $client->create($info);
 
-print_r($response->getData());
+print_r($response);

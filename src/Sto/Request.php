@@ -53,12 +53,12 @@ class Request
             }
 
             if ($response->getStatusCode() === 200 && $body['success'] === 'true') {
-                return new Response(1, '成功', $body['data']);
+                return new Response(false, '成功', $body['data']);
             } else {
-                return new Response(0, '失败', $body['data']);
+                return new Response(true, '失败', $body['data']);
             }
         } catch (Throwable | Exception $e) {
-            return new Response(0, '请求失败:' . $e->getMessage());
+            return new Response(false, '请求失败:' . $e->getMessage());
         }
     }
 

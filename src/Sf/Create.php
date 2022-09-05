@@ -7,6 +7,7 @@ use LExpress\Info;
 use LExpress\Info\ProductInfo;
 use LExpress\OperateInterFace;
 use LExpress\Response;
+use Ramsey\Uuid\Uuid;
 
 class Create implements OperateInterFace
 {
@@ -44,19 +45,6 @@ class Create implements OperateInterFace
         }
     }
 
-    /**
-     * @return string
-     */
-    private function createUuid(): string
-    {
-        $chars = md5(uniqid(mt_rand(), true));
-        $uuid = substr($chars, 0, 8) . '-'
-            . substr($chars, 8, 4) . '-'
-            . substr($chars, 12, 4) . '-'
-            . substr($chars, 16, 4) . '-'
-            . substr($chars, 20, 12);
-        return $uuid;
-    }
 
     /**
      * @param $msgData
@@ -69,35 +57,11 @@ class Create implements OperateInterFace
     }
 
     /**
-     * @param $url
-     * @param $post_data
-     * @return false|string
-     */
-    private function sendPost($url, $post_data)
-    {
-
-        $postdata = http_build_query($post_data);
-        $options = array(
-            'http' => array(
-                'method' => 'POST',
-                'header' => 'Content-type:application/x-www-form-urlencoded;charset=utf-8',
-                'content' => $postdata,
-                'timeout' => 15 * 60 // 超时时间（单位:s）
-            )
-        );
-        $context = stream_context_create($options);
-
-        $result = \GuzzleHttp\json_decode(file_get_contents($url, false, $context), true);
-
-        return $result;
-    }
-
-    /**
      * @return array
      */
     private function getMsgData(): array
     {
-        return [
+        $data = [
             'cargoDetails' => $this->getProducts(),
             'contactInfoList' => [[
                 'address' => $this->data->getSender()->address,
@@ -120,12 +84,15 @@ class Create implements OperateInterFace
             'isGenWaybillNo' => $this->config->isGenWaybillNo,
             'language' => 'zh-CN',
             'monthlyCard' => $this->config->monthlyCard,
-            'orderId' => $this->data->getOrder()->code,
-            'waybillNoInfoList' => [[
+            'orderId' => $this->data->getOrder()->code
+        ];
+        if($this->data->getOrder()->waybill){
+            $data['waybillNoInfoList'] = [[
                 'waybillNo' => $this->data->getOrder()->waybill,
                 'waybillType' => 1
-            ]]
-        ];
+            ]];
+        }
+        return $data;
     }
 
     /**
@@ -140,6 +107,7 @@ class Create implements OperateInterFace
                 'count' => $product->qty,
                 'name' => $product->name,
                 'unit' => "个",
+                'currency' => "CNY",
                 'weight' => $product->weight,
             ];
         }
@@ -155,7 +123,7 @@ class Create implements OperateInterFace
         $msgData = \GuzzleHttp\json_encode($this->getMsgData(), JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
         return [
             'partnerID' => $this->config->partnerID,
-            'requestID' => $this->createUuid(),
+            'requestID' => Uuid::uuid1()->toString(),
             'serviceCode' => 'EXP_RECE_CREATE_ORDER',
             'timestamp' => $timestamp,
             'msgDigest' => $this->msgDigest($msgData, $timestamp),
