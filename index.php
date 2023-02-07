@@ -11,16 +11,18 @@ use LExpress\Zto\Create;
 include_once __DIR__ . '/vendor/autoload.php';
 
 $sfConfig = new Config();
-$sfConfig->partnerID = 'BLGYLNVsNVjG';
-$sfConfig->checkword = 'WpRXatmIY1c8mGeDmnjudsGiF7h9i6gh';
-$sfConfig->monthlyCard = '7551234567';
+$sfConfig->partnerID = 'NMT';
+$sfConfig->checkword = 'COUHKI384YOU';
+$sfConfig->monthlyCard = '9999999999';
+$sfConfig->isSBox = true;
+$sfConfig->isGenWaybillNo = 1;
 
 $client = new Client($sfConfig);
 
 $order = new Info\OrderInfo();
 $order->code = time();
 
-$order->id_number = '4304231977040345521';
+$order->extra['id_number'] = '4304231911040345521';
 
 $product = new Info\ProductInfo();
 $product->weight = 0.4;
@@ -31,18 +33,18 @@ $product->price = 44;
 $receiver = new ReceiverInfo();
 $receiver->name = '路飞';
 $receiver->mobile = "185421541225";
-$receiver->province = '湖南省';
-$receiver->city = '长沙市';
-$receiver->area = '长沙县';
-$receiver->address = '黄花综合保税区';
+$receiver->province = '广东省';
+$receiver->city = '深圳市';
+$receiver->area = '南山区';
+$receiver->address = '高新南七道粤美特大厦1506';
 
 $senderInfo = new SenderInfo();
 $senderInfo->name = '路飞';
-$senderInfo->mobile = 18620313779;
-$senderInfo->province = '湖南省';
-$senderInfo->city = '长沙市';
-$senderInfo->area = '长沙县';
-$senderInfo->address = '黄花综合保税区';
+$senderInfo->mobile = 18620313119;
+$senderInfo->province = '广东省';
+$senderInfo->city = '深圳市';
+$senderInfo->area = '南山区';
+$senderInfo->address = '高新南七道粤美特大厦1506';
 
 $info = new Info();
 $info->addProduct($product);
@@ -52,4 +54,4 @@ $info->setSender($senderInfo);
 
 $response = $client->create($info);
 
-print_r($response);
+print_r(json_encode($response->getData()));

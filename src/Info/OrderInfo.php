@@ -11,4 +11,6 @@ class OrderInfo extends AbstractInfo
 
     /** @var string 物流单号 */
     public $waybill = '';
+
+    public $isReturnRoutelabel = '1';
 }

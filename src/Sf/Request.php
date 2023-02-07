@@ -30,10 +30,10 @@ class Request
         /** @var  $client */
         $client = new Client();
         $response = $client->request('POST', $this->config->getUrl(), [
-            'params' => $content,
+            'form_params' => $content,
             'timeout' => 10,
             'headers' => [
-                'Content-type' => 'application/x-www-form-urlencoded;charset=utf-8'
+                'Content-Type' => 'application/x-www-form-urlencoded;charset=utf-8'
             ]
         ]);
         $result = \GuzzleHttp\json_decode($response->getBody()->getContents(), true);

@@ -83,10 +83,15 @@ class Create implements OperateInterFace
             'expressTypeId' => $this->config->expressTypeId,
             'isGenWaybillNo' => $this->config->isGenWaybillNo,
             'language' => 'zh-CN',
+            'CustomsInfo' => [
+                'declaredValue' => $this->getDeclaredValue(),
+                'declaredValueCurrency' => 'CNY',
+            ],
             'monthlyCard' => $this->config->monthlyCard,
-            'orderId' => $this->data->getOrder()->code
+            'orderId' => $this->data->getOrder()->code,
+            'isReturnRoutelabel' => $this->data->getOrder()->isReturnRoutelabel
         ];
-        if($this->data->getOrder()->waybill){
+        if ($this->data->getOrder()->waybill) {
             $data['waybillNoInfoList'] = [[
                 'waybillNo' => $this->data->getOrder()->waybill,
                 'waybillType' => 1
@@ -109,9 +114,23 @@ class Create implements OperateInterFace
                 'unit' => "个",
                 'currency' => "CNY",
                 'weight' => $product->weight,
+                'sourceArea' => $product->country,
             ];
         }
         return $products;
+    }
+
+    /**
+     * 货值
+     * @return int|string
+     */
+    private function getDeclaredValue()
+    {
+        $value = 0;
+        foreach ($this->data->getProducts() as $product) {
+            $value = bcadd($value, bcmul($product->price, $product->qty, 2),2);
+        }
+        return $value;
     }
 
     /**
@@ -120,7 +139,7 @@ class Create implements OperateInterFace
     public function getBody()
     {
         $timestamp = time();
-        $msgData = \GuzzleHttp\json_encode($this->getMsgData(), JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
+        $msgData = \GuzzleHttp\json_encode($this->getMsgData(), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
         return [
             'partnerID' => $this->config->partnerID,
             'requestID' => Uuid::uuid1()->toString(),

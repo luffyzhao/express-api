@@ -15,7 +15,7 @@ class Config extends AbstractConfig
     /** @var string 月结卡号  */
     public $monthlyCard = '';
     // 沙箱环境的地址
-    public $sBoxUrl = 'http://sfapi-sbox.sf-express.com/std/service';
+    public $sBoxUrl = 'https://sfapi.sit.sf-express.com:45273/std/service';
     // 生产环境的地址
     public $prodUrl = 'https://sfapi.sf-express.com/std/service';
 

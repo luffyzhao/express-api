@@ -15,6 +15,8 @@ class ProductInfo extends AbstractInfo
     /** @var float 毛重 */
     public $weight;
 
+    public $country = "美国";
+
     /**
      * @return float|int
      * @author luffyzhao@vip.126.com
