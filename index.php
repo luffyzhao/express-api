@@ -54,4 +54,4 @@ $info->setSender($senderInfo);
 
 $response = $client->create($info);
 
-print_r(json_encode($response->getData()));
+print_r($response);
