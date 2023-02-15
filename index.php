@@ -11,9 +11,9 @@ use LExpress\Zto\Create;
 include_once __DIR__ . '/vendor/autoload.php';
 
 $sfConfig = new Config();
-$sfConfig->partnerID = 'NMT';
-$sfConfig->checkword = 'COUHKI384YOU';
-$sfConfig->monthlyCard = '9999999999';
+$sfConfig->partnerID = 'BLGYLNVsNVjG';
+$sfConfig->checkword = 'WpRXatmIY1c8mGeDmnjudsGiF7h9i6gh';
+$sfConfig->monthlyCard = '7551234567';
 $sfConfig->isSBox = true;
 $sfConfig->isGenWaybillNo = 1;
 

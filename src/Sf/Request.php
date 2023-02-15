@@ -38,10 +38,11 @@ class Request
         ]);
         $result = \GuzzleHttp\json_decode($response->getBody()->getContents(), true);
 
+
         if ($result['apiResultCode'] === 'A1000') {
             $resultContData = \GuzzleHttp\json_decode($result['apiResultData'], true);
             if($resultContData['success'] === true ){
-                return new Response(true, '成功', $result, $resultContData['msgData']['waybillNoInfoList'][0]['waybillNo']);
+                return new Response(true, '成功', $result, $resultContData['msgData']['waybillNoInfoList'][0]['waybillNo']??'');
             }else{
                 return new Response(false, $result['apiErrorMsg'], $resultContData);
             }
