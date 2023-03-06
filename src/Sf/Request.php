@@ -44,7 +44,7 @@ class Request
             if($resultContData['success'] === true ){
                 return new Response(true, '成功', $result, $resultContData['msgData']['waybillNoInfoList'][0]['waybillNo']??'');
             }else{
-                return new Response(false, $result['apiErrorMsg'], $resultContData);
+                return new Response(false, $resultContData['errorMsg'], $resultContData);
             }
         } else {
             return new Response(false, $result['apiErrorMsg'], $result);
