@@ -5,8 +5,8 @@ use LExpress\Info;
 use LExpress\Info\ProductInfo;
 use LExpress\Info\ReceiverInfo;
 use LExpress\Info\SenderInfo;
-use LExpress\Zto\Config;
-use LExpress\Zto\Create;
+use LExpress\Yz\Config;
+use LExpress\Yz\Create;
 
 include_once __DIR__ . '/vendor/autoload.php';
 
@@ -15,7 +15,7 @@ $sfConfig = new Config();
 $client = new Client($sfConfig);
 
 $order = new Info\OrderInfo();
-$order->code = time();
+$order->code = time() . "";
 
 $order->extra['id_number'] = '4304231911040345521';
 
