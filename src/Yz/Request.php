@@ -53,7 +53,7 @@ trait Request
      * @return bool|string
      * @throws \Exception
      */
-    private function post(string $url, array $query, int $timeout)
+    public function post(string $url, array $query, int $timeout)
     {
         $headers = ["Content-Type:application/x-www-form-urlencoded; charset=UTF-8"];
         $ch = curl_init();

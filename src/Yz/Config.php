@@ -14,5 +14,5 @@ class Config extends AbstractConfig
     public $baseProductNo = "1";
     public $msgType = "0";
     public $secretKey = 'da1c29a576632e982156f6f8351a79b9';
-    public $url = "http://211.156.195.180/eis-itf-webext/uat_interface";
+    public $url = "http://211.156.195.180/eis-itf-webext/interface";
 }

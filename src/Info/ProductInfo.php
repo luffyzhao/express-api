@@ -21,7 +21,7 @@ class ProductInfo extends AbstractInfo
      * @return float|int
      * @author luffyzhao@vip.126.com
      */
-    protected function getTotalWeight(){
+    public function getTotalWeight(){
         return $this->weight * $this->qty;
     }
 
@@ -29,7 +29,7 @@ class ProductInfo extends AbstractInfo
      * @return float|int
      * @author luffyzhao@vip.126.com
      */
-    protected function getTotalPrice(){
+    public function getTotalPrice(){
         return $this->price * $this->qty;
     }
 }

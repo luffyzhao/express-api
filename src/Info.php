@@ -99,7 +99,11 @@ class Info
      * @author luffyzhao@vip.126.com
      */
     public function getProductWeight(){
-        return array_sum(array_column($this->products, 'total_weight'));
+        $weight = 0;
+        foreach ($this->products as $product){
+            $weight += $product->getTotalWeight();
+        }
+        return $weight;
     }
 
     /**
@@ -107,7 +111,11 @@ class Info
      * @author luffyzhao@vip.126.com
      */
     public function getProductPrice(){
-        return array_sum(array_column($this->products, 'total_price'));
+        $price = 0;
+        foreach ($this->products as $product){
+            $price += $product->getTotalPrice();
+        }
+        return $price;
     }
 
     /**
@@ -115,7 +123,11 @@ class Info
      * @author luffyzhao@vip.126.com
      */
     public function getProductName(){
-        return implode(array_column($this->products, 'name'), "  ");
+        $name = "";
+        foreach ($this->products as $product){
+            $name .= $product->name . " ";
+        }
+        return $name;
     }
 
     /**

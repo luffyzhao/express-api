@@ -11,13 +11,21 @@ use LExpress\Yz\Create;
 include_once __DIR__ . '/vendor/autoload.php';
 
 $sfConfig = new Config();
+$sfConfig->senderNo = '1100149462299';
+$sfConfig->secretKey = 'd08cc1a3d330b6901228a1e63a20cda2';
 
 $client = new Client($sfConfig);
 
 $order = new Info\OrderInfo();
-$order->code = time() . "";
+$order->code = "1682576987";
+$order->waybill = "1235806555538";
 
 $order->extra['id_number'] = '4304231911040345521';
+$order->extra['ceb511_note'] = "4301xxKxxx xxxxxx DXPENT00000xxxxx";
+$order->extra['areaCode'] = "4301xxKxxx";
+$order->extra['areaName'] = "xxxxxxx";
+$order->extra['Dcode'] = "xxxxxxx";
+$order->extra['Key'] = "xxxxxxx";
 
 $product = new Info\ProductInfo();
 $product->weight = 0.4;
@@ -47,6 +55,6 @@ $info->setOrder($order);
 $info->setReceiver($receiver);
 $info->setSender($senderInfo);
 
-$response = $client->create($info);
+$response = $client->customs($info);
 
 print_r($response);
