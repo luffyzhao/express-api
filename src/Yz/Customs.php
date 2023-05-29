@@ -33,7 +33,7 @@ class Customs implements OperateInterFace
      */
     public function handle(): Response
     {
-        $response = $this->post("http://222.240.147.33:17790/kjcktb_ws/ImportData", $this->getBody(), 10);
+        $response = $this->post($this->config->customsUrl, $this->getBody(), 10);
         print_r($this->getBody());
         print_r($response);
         return new Response(true);

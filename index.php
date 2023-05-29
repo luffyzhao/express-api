@@ -55,6 +55,5 @@ $info->setOrder($order);
 $info->setReceiver($receiver);
 $info->setSender($senderInfo);
 
-$response = $client->customs($info);
 
-print_r($response);
+print_r($info->toArray());

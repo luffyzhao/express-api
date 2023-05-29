@@ -13,6 +13,8 @@ class Config extends AbstractConfig
     // 基础产品代码 1：标准快递 2：快递包裹 3：代收/到付（标准快递）
     public $baseProductNo = "1";
     public $msgType = "0";
-    public $secretKey = 'da1c29a576632e982156f6f8351a79b9';
+    public $secretKey = '';
     public $url = "http://211.156.195.180/eis-itf-webext/interface";
+
+    public $customsUrl = "http://222.240.147.33:17790/kjcktb_ws/ImportData";
 }

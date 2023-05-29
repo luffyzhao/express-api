@@ -9,7 +9,7 @@ use LExpress\Info\ProductInfo;
 use LExpress\Info\ReceiverInfo;
 use LExpress\Info\SenderInfo;
 
-class Info
+class Info implements \JsonSerializable
 {
     /** @var OrderInfo */
     protected $order;
@@ -139,5 +139,27 @@ class Info
     {
         $this->products = $products;
         return $this;
+    }
+
+    protected function getProductsArray(){
+        $products = [];
+        foreach ($this->products as $product){
+            $products[] = (array)$product;
+        }
+        return $products;
+    }
+
+    public function toArray(){
+        return [
+            'order' => (array)$this->getOrder(),
+            'receiver' => (array)$this->getReceiver(),
+            'sender' => (array)$this->getSender(),
+            'products' => $this->getProductsArray(),
+        ];
+    }
+
+    public function jsonSerialize()
+    {
+        return json_encode($this->toArray());
     }
 }
