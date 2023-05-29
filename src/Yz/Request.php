@@ -35,7 +35,7 @@ trait Request
         $jsonArr = json_decode($json, true);
 
 
-        print_r(urldecode(http_build_query($raw)));
+//        print_r(urldecode(http_build_query($raw)));
 
         if($jsonArr['code']== 'S00'){
             return new Response(true, $jsonArr['message'], $jsonArr, $jsonArr['body']['waybill_no']);

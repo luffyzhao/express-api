@@ -34,8 +34,8 @@ class Customs implements OperateInterFace
     public function handle(): Response
     {
         $response = $this->post($this->config->customsUrl, $this->getBody(), 10);
-        print_r($this->getBody());
-        print_r($response);
+//        print_r($this->getBody());
+//        print_r($response);
         return new Response(true);
     }
 
