@@ -15,17 +15,13 @@
     "ext-curl": "*",
     "ext-openssl": "*",
     "ext-mbstring": "*",
-    "ext-bcmath": "*"
+    "ext-bcmath": "*",
+    "luffyzhao/jd-jos-sdk": "^2.0",
+    "ext-simplexml": "*"
   },
   "autoload": {
     "psr-4": {
       "LExpress\\": "src/"
-    }
-  },
-  "repositories": {
-    "packagist": {
-      "type": "composer",
-      "url": "https://mirrors.aliyun.com/composer/"
     }
   }
 }

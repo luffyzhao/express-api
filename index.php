@@ -5,27 +5,43 @@ use LExpress\Info;
 use LExpress\Info\ProductInfo;
 use LExpress\Info\ReceiverInfo;
 use LExpress\Info\SenderInfo;
-use LExpress\Yz\Config;
+use LExpress\JD\Config;
 use LExpress\Yz\Create;
 
 include_once __DIR__ . '/vendor/autoload.php';
 
 $sfConfig = new Config();
-$sfConfig->senderNo = '1100149462299';
-$sfConfig->secretKey = 'd08cc1a3d330b6901228a1e63a20cda2';
+$sfConfig->appKey = "EDA58319CDC8E4D160095195655BD3D8";
+$sfConfig->appSecret = "f4725ddc25d24c5ebea636aadf15e946";
+$sfConfig->accessToken = "f699f1413f0741eea0800eb113cc13b7wyxn";
+$sfConfig->serverUrl = "https://api.jd.com/routerjson";
 
 $client = new Client($sfConfig);
 
 $order = new Info\OrderInfo();
-$order->code = "1682576987";
-$order->waybill = "1235806555538";
+//$order->code = "1682576987";
+//$order->code = "16825769871";
+//$order->code = "16825769872";
+//$order->code = "168257698721";
+//$order->code = "1682576987212";
+//$order->waybill = "JDVE08448318980";
+//
+//$order->code = "16825769872122";
+//$order->waybill = "JDVE08448640092";
 
-$order->extra['id_number'] = '4304231911040345521';
-$order->extra['ceb511_note'] = "4301xxKxxx xxxxxx DXPENT00000xxxxx";
-$order->extra['areaCode'] = "4301xxKxxx";
-$order->extra['areaName'] = "xxxxxxx";
-$order->extra['Dcode'] = "xxxxxxx";
-$order->extra['Key'] = "xxxxxxx";
+
+$order->code = "1682576987212121";
+
+$order->extra['salePlat'] = '0030001';
+
+$order->extra['customerCode'] = '027K2698476';
+$order->extra['platformId'] = '8041420';
+$order->extra['platformName'] = '长沙斑鹿仓海应用';
+$order->extra['buyerIdNumber'] = '430423199104034713';
+$order->extra['customsId'] = 4921;
+$order->extra['customsCode'] = 4900;
+$order->extra['deptNo'] = 'EBU4418055054256';
+$order->extra['isvSource'] = 'ISV0020008044873';
 
 $product = new Info\ProductInfo();
 $product->weight = 0.4;
@@ -55,5 +71,7 @@ $info->setOrder($order);
 $info->setReceiver($receiver);
 $info->setSender($senderInfo);
 
-
-print_r($info->toArray());
+//$client->create($info);
+print_r($response = $client->create($info));
+$order->waybill = $response->getCode();
+print_r($client->customs($info));

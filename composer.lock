@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "eb7991164638605aa666b3ff381a8a96",
+    "content-hash": "4504b8cb3ae4ab52e22233a617073d17",
     "packages": [
         {
             "name": "brick/math",
@@ -420,6 +420,46 @@
                 }
             ],
             "time": "2022-08-28T14:45:39+00:00"
+        },
+        {
+            "name": "luffyzhao/jd-jos-sdk",
+            "version": "v2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/luffyzhao/jd-jos-sdk.git",
+                "reference": "40da16c7493540de2827d3b1b891b5c2da9f9d1d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/luffyzhao/jd-jos-sdk/zipball/40da16c7493540de2827d3b1b891b5c2da9f9d1d",
+                "reference": "40da16c7493540de2827d3b1b891b5c2da9f9d1d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "LJdJos\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "luffyzhao",
+                    "email": "luffyzhao@vip.126.com"
+                }
+            ],
+            "description": "京东宙斯sdk接口",
+            "support": {
+                "issues": "https://github.com/luffyzhao/jd-jos-sdk/issues",
+                "source": "https://github.com/luffyzhao/jd-jos-sdk/tree/v2.0"
+            },
+            "time": "2023-07-14T07:08:44+00:00"
         },
         {
             "name": "psr/http-client",
@@ -1181,9 +1221,12 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
+        "php": ">=7.1",
         "ext-json": "*",
         "ext-curl": "*",
-        "ext-openssl": "*"
+        "ext-openssl": "*",
+        "ext-mbstring": "*",
+        "ext-bcmath": "*"
     },
     "platform-dev": [],
     "plugin-api-version": "2.3.0"

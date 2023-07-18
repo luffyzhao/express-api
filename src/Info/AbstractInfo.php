@@ -58,12 +58,16 @@ abstract class AbstractInfo implements \ArrayAccess
      * @param $offset
      * @return bool
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return property_exists($this, $offset) || method_exists($this, $this->getMethod($offset));
     }
 
-    public function offsetGet($offset)
+    /**
+     * @param $offset
+     * @return mixed
+     */
+    public function offsetGet($offset): mixed
     {
         if ($this->offsetExists($offset)) {
             if (method_exists($this, $this->getMethod($offset))) {
@@ -78,14 +82,18 @@ abstract class AbstractInfo implements \ArrayAccess
      * @param $value
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if ($this->offsetExists($offset)) {
             $this->{$offset} = $value;
         }
     }
 
-    public function offsetUnset($offset)
+    /**
+     * @param $offset
+     * @return void
+     */
+    public function offsetUnset($offset):void
     {
         // TODO: Implement offsetUnset() method.
     }

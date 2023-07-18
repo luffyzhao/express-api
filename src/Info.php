@@ -90,7 +90,8 @@ class Info implements \JsonSerializable
      * @param ProductInfo $info
      * @author luffyzhao@vip.126.com
      */
-    public function addProduct(ProductInfo $info){
+    public function addProduct(ProductInfo $info)
+    {
         $this->products[] = $info;
     }
 
@@ -98,9 +99,10 @@ class Info implements \JsonSerializable
      * @return float|int
      * @author luffyzhao@vip.126.com
      */
-    public function getProductWeight(){
+    public function getProductWeight()
+    {
         $weight = 0;
-        foreach ($this->products as $product){
+        foreach ($this->products as $product) {
             $weight += $product->getTotalWeight();
         }
         return $weight;
@@ -110,9 +112,10 @@ class Info implements \JsonSerializable
      * @return float|int
      * @author luffyzhao@vip.126.com
      */
-    public function getProductPrice(){
+    public function getProductPrice()
+    {
         $price = 0;
-        foreach ($this->products as $product){
+        foreach ($this->products as $product) {
             $price += $product->getTotalPrice();
         }
         return $price;
@@ -122,9 +125,10 @@ class Info implements \JsonSerializable
      * @return string
      * @author luffyzhao@vip.126.com
      */
-    public function getProductName(){
+    public function getProductName()
+    {
         $name = "";
-        foreach ($this->products as $product){
+        foreach ($this->products as $product) {
             $name .= $product->name . " ";
         }
         return $name;
@@ -141,15 +145,17 @@ class Info implements \JsonSerializable
         return $this;
     }
 
-    protected function getProductsArray(){
+    protected function getProductsArray()
+    {
         $products = [];
-        foreach ($this->products as $product){
+        foreach ($this->products as $product) {
             $products[] = (array)$product;
         }
         return $products;
     }
 
-    public function toArray(){
+    public function toArray()
+    {
         return [
             'order' => (array)$this->getOrder(),
             'receiver' => (array)$this->getReceiver(),
@@ -158,7 +164,7 @@ class Info implements \JsonSerializable
         ];
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         return json_encode($this->toArray());
     }

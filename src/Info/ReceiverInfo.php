@@ -18,4 +18,8 @@ class ReceiverInfo extends AbstractInfo
     public $area = '';
     /** @var string 详细地址 */
     public $address = '';
+
+    public function getAllAddress(){
+        return $this->province . " " . $this->city . " " . $this->area . " " . $this->address;
+    }
 }
