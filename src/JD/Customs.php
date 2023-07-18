@@ -18,13 +18,14 @@ class Customs extends Base
         } else {
             $respArr = @simplexml_load_string($response);
         }
-//        print_r($respArr);
         if (null === $respArr) {
             return new Response(false, $response);
         }
-
-        return new Response(false, $response);
-
+        if (isset($respArr['error_response']) || $respArr['jingdong_eclp_order_addDeclareOrderCustoms_responce']['code'] !== '0') {
+            return new Response(false, $respArr['error_response']['zh_desc'] ?? $respArr['jingdong_eclp_order_addDeclareOrderCustoms_responce']['declaredOrderCustoms_result']['message'], $respArr);
+        } else {
+            return new Response(true, '成功', $respArr);
+        }
     }
 
     public function getBody()
