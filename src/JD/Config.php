@@ -22,6 +22,8 @@ class Config implements ConfigInterFace
 
     public $format = 'json';
 
+    public $appType = 1;
+
     private $charset_utf8 = 'UTF-8';
 
     private $json_param_key = '360buy_param_json';

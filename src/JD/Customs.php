@@ -32,7 +32,7 @@ class Customs extends Base
         return [
             'platformId' => $this->data->getOrder()->extra['platformId'],
             'platformName' => $this->data->getOrder()->extra['platformName'],
-            'appType' => $this->data->getOrder()->extra['appType'] ?? 1,
+            'appType' => $this->config->appType,
             'logisticsNo' => $this->data->getOrder()->waybill,
             'billSerialNo' => $this->data->getOrder()->extra['billSerialNo'] ?? '',
             'billNo' => $this->data->getOrder()->extra['billNo'] ?? '',
