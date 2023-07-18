@@ -18,7 +18,7 @@ class Customs extends Base
         } else {
             $respArr = @simplexml_load_string($response);
         }
-        print_r($respArr);
+//        print_r($respArr);
         if (null === $respArr) {
             return new Response(false, $response);
         }
