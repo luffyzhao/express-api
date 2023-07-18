@@ -11,9 +11,7 @@ use LExpress\Yz\Create;
 include_once __DIR__ . '/vendor/autoload.php';
 
 $sfConfig = new Config();
-$sfConfig->appKey = "";
-$sfConfig->appSecret = "";
-$sfConfig->accessToken = "";
+
 $sfConfig->serverUrl = "https://api.jd.com/routerjson";
 
 $client = new Client($sfConfig);
@@ -32,16 +30,6 @@ $order = new Info\OrderInfo();
 
 $order->code = "1682576987212121";
 
-$order->extra['salePlat'] = '0030001';
-
-$order->extra['customerCode'] = '027K2698476';
-$order->extra['platformId'] = '8041420';
-$order->extra['platformName'] = '长沙斑鹿仓海应用';
-$order->extra['buyerIdNumber'] = '430423199104034713';
-$order->extra['customsId'] = 4921;
-$order->extra['customsCode'] = 4900;
-$order->extra['deptNo'] = 'EBU4418055054256';
-$order->extra['isvSource'] = 'ISV0020008044873';
 
 $product = new Info\ProductInfo();
 $product->weight = 0.4;
