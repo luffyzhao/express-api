@@ -11,9 +11,9 @@ use LExpress\Yz\Create;
 include_once __DIR__ . '/vendor/autoload.php';
 
 $sfConfig = new Config();
-$sfConfig->appKey = "EDA58319CDC8E4D160095195655BD3D8";
-$sfConfig->appSecret = "f4725ddc25d24c5ebea636aadf15e946";
-$sfConfig->accessToken = "f699f1413f0741eea0800eb113cc13b7wyxn";
+$sfConfig->appKey = "";
+$sfConfig->appSecret = "";
+$sfConfig->accessToken = "";
 $sfConfig->serverUrl = "https://api.jd.com/routerjson";
 
 $client = new Client($sfConfig);
