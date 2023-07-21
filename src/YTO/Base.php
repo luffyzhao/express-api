@@ -47,9 +47,9 @@ abstract class Base implements OperateInterFace
      */
     protected function pKCS7EncoderUitl(int $count)
     {
-        $amount = 32 - ($count % 32);
+        $amount = 16 - ($count % 16);
         if ($amount === 0) {
-            $amount = 32;
+            $amount = 16;
         }
         $padChr = chr($amount);
         $tmp = '';
