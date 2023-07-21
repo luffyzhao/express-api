@@ -16,7 +16,6 @@
     "ext-openssl": "*",
     "ext-mbstring": "*",
     "ext-bcmath": "*",
-    "luffyzhao/jd-jos-sdk": "^2.0",
     "ext-simplexml": "*"
   },
   "autoload": {

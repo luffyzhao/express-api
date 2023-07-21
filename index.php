@@ -5,31 +5,22 @@ use LExpress\Info;
 use LExpress\Info\ProductInfo;
 use LExpress\Info\ReceiverInfo;
 use LExpress\Info\SenderInfo;
-use LExpress\JD\Config;
+use LExpress\YTO\Config;
 use LExpress\Yz\Create;
 
 include_once __DIR__ . '/vendor/autoload.php';
 
+
+
 $sfConfig = new Config();
-
-$sfConfig->serverUrl = "https://api.jd.com/routerjson";
-
+$sfConfig->isSBox = true;
 $client = new Client($sfConfig);
 
 $order = new Info\OrderInfo();
-//$order->code = "1682576987";
-//$order->code = "16825769871";
-//$order->code = "16825769872";
-//$order->code = "168257698721";
-//$order->code = "1682576987212";
-//$order->waybill = "JDVE08448318980";
-//
-//$order->code = "16825769872122";
-//$order->waybill = "JDVE08448640092";
-
 
 $order->code = "1682576987212121";
-
+$order->extra['buyerName'] = '索宇';
+$order->extra['buyerIdNumber'] = '是小狗';
 
 $product = new Info\ProductInfo();
 $product->weight = 0.4;
@@ -60,6 +51,6 @@ $info->setReceiver($receiver);
 $info->setSender($senderInfo);
 
 //$client->create($info);
-print_r($response = $client->create($info));
+$response = $client->create($info);
 $order->waybill = $response->getCode();
 print_r($client->customs($info));
