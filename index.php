@@ -24,7 +24,8 @@ $sfConfig->clientKey = '';
 
 $order = new Info\OrderInfo();
 
-$order->code = "1682576987212121";
+$order->code = "1682576987212121-" . rand(1000, 9999);
+
 $order->extra['buyerName'] = '索宇';
 $order->extra['buyerIdNumber'] = '是小狗';
 
