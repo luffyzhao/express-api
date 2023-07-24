@@ -13,8 +13,14 @@ include_once __DIR__ . '/vendor/autoload.php';
 
 
 $sfConfig = new Config();
-$sfConfig->isSBox = true;
+$sfConfig->isSBox = false;
 $client = new Client($sfConfig);
+$sfConfig->secretKey = "";
+$sfConfig->customerCode = '';
+$sfConfig->clientSecret = "";
+$sfConfig->clientKey = '';
+
+
 
 $order = new Info\OrderInfo();
 
@@ -50,7 +56,11 @@ $info->setOrder($order);
 $info->setReceiver($receiver);
 $info->setSender($senderInfo);
 
-//$client->create($info);
 $response = $client->create($info);
-$order->waybill = $response->getCode();
-print_r($client->customs($info));
+if($response->getStatus()){
+    $order->waybill = $response->getCode();
+    $client->customs($info);
+}
+
+print_r($response);
+

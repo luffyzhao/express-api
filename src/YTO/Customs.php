@@ -13,7 +13,7 @@ class Customs extends Base
     // 沙箱环境的地址
     public $sBoxUrl = 'http://customs.yto.net.cn/api/waybill/declare/test/1210/message';
     // 生产环境的地址
-    public $prodUrl = 'https://sfapi.sf-express.com/std/service';
+    public $prodUrl = 'http://customs.yto.net.cn/api/waybill/declare/imp/1210/message';
 
     /**
      * @param ConfigInterFace $config
