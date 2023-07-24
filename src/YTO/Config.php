@@ -8,13 +8,14 @@ class Config implements ConfigInterFace
 {
     public $customerCode = "K21000119";
 
+    public $secretKey = "u2Z1F7Fh";
+
     public $clientKey = "YT07300001";
 
     public $clientSecret = "yK5fknTTn7C6Ae71dh6B7mNHLWsGCIYELxb8sDioX5p";
 
     public $channelCode = "CN073101";
 
-    public $secretKey = "u2Z1F7Fh";
 
     public $version = 'v1';
 

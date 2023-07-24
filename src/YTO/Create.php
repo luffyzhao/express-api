@@ -38,10 +38,10 @@ class Create extends Base
         $data['sign'] = $this->encryptSignForOpen($sign);
 
         $response = $this->post($this->getUrl(), $data);
-        if(!array_key_exists('code', $response)){
+        if(!array_key_exists('mailNo', $response)){
             return new Response(false, $response['reason'] ?? ($response['apiErrorMsg'] ?? ""));
         }
-        var_dump($response);
+
         return new Response(true, '成功', $response, $response['mailNo']);
     }
 

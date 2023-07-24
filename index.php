@@ -14,17 +14,16 @@ include_once __DIR__ . '/vendor/autoload.php';
 
 $sfConfig = new Config();
 $sfConfig->isSBox = false;
-$client = new Client($sfConfig);
-$sfConfig->secretKey = "";
-$sfConfig->customerCode = '';
-$sfConfig->clientSecret = "";
-$sfConfig->clientKey = '';
 
+
+
+
+$client = new Client($sfConfig);
 
 
 $order = new Info\OrderInfo();
 
-$order->code = "1682576987212121-" . rand(1000, 9999);
+$order->code = "1682576987212121B" . rand(1000, 9999);
 
 $order->extra['buyerName'] = '索宇';
 $order->extra['buyerIdNumber'] = '是小狗';
