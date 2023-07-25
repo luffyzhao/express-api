@@ -49,7 +49,7 @@ class GetPdf implements OperateInterFace
         $msgData = \GuzzleHttp\json_encode($this->getMsgData(), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
         return [
             'partnerID' => $this->config->partnerID,
-            'requestID' => Uuid::uuid1()->toString(),
+            'requestID' => Uuid::uuid6()->toString(),
             'serviceCode' => 'COM_RECE_CLOUD_PRINT_WAYBILLS',
             'timestamp' => $timestamp,
             'msgDigest' => $this->msgDigest($msgData, $timestamp),

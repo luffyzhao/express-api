@@ -34,7 +34,7 @@ class Customs extends Base
             'channelCode' => $this->config->channelCode,
             'data' => $param,
             'timestamp' => time() . "000",
-            'nonce' => Uuid::uuid4()->toString()
+            'nonce' => Uuid::uuid6()->toString()
         ];
 
         $data['signature'] = $this->sign($data);

@@ -60,8 +60,8 @@ class Customs implements OperateInterFace
     private function getCeb511($logisticsNo)
     {
         return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" .
-            "<ceb:CEB511Message guid=\"" . Uuid::uuid1()->toString() . "\" version=\"1.0\"  xmlns:ceb=\"http://www.chinaport.gov.cn/ceb\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">" .
-            "<ceb:Logistics><ceb:LogisticsHead><ceb:guid>" . Uuid::uuid1()->toString() . "</ceb:guid><ceb:appType>1</ceb:appType>" .
+            "<ceb:CEB511Message guid=\"" . Uuid::uuid6()->toString() . "\" version=\"1.0\"  xmlns:ceb=\"http://www.chinaport.gov.cn/ceb\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">" .
+            "<ceb:Logistics><ceb:LogisticsHead><ceb:guid>" . Uuid::uuid6()->toString() . "</ceb:guid><ceb:appType>1</ceb:appType>" .
             "<ceb:appTime>" . date('YmdHis') . "</ceb:appTime><ceb:appStatus>2</ceb:appStatus>" .
             "<ceb:logisticsCode>4301980029</ceb:logisticsCode><ceb:logisticsName>长沙一邮速递服务有限公司</ceb:logisticsName>" .
             "<ceb:logisticsNo>" . $logisticsNo . "</ceb:logisticsNo><ceb:billNo>CSBLGYL" . date('YmdH') . "</ceb:billNo><ceb:orderNo>" . $this->data->getOrder()->code . "</ceb:orderNo>" .

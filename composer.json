@@ -10,7 +10,7 @@
   "require": {
     "php": ">=7.1",
     "guzzlehttp/guzzle": ">=1.0",
-    "ramsey/uuid": ">=1.0",
+    "ramsey/uuid": ">=4.2.3",
     "ext-json": "*",
     "ext-curl": "*",
     "ext-openssl": "*",

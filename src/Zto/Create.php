@@ -77,7 +77,7 @@ class Create implements OperateInterFace
                 'district' => $this->data->getReceiver()->area,
                 'address' => $this->data->getReceiver()->address,
             ],
-            'unionCode' => Uuid::uuid1()->toString()
+            'unionCode' => Uuid::uuid6()->toString()
         ];
     }
 

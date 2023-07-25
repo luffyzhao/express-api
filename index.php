@@ -12,13 +12,16 @@ include_once __DIR__ . '/vendor/autoload.php';
 
 
 
-$sfConfig = new Config();
-$sfConfig->isSBox = false;
+$config = new Config();
+$config->isSBox = false;
+$config->secretKey = "5361Wk9f";
+$config->customerCode = 'K73024429';
+$config->clientSecret = "ZH0Vb7G9cAlw3UhQ9utG6FT6mGAtw0d7aZz9pLbUxb4";
+$config->clientKey = 'YA07300001';
 
 
 
-
-$client = new Client($sfConfig);
+$client = new Client($config);
 
 
 $order = new Info\OrderInfo();

@@ -20,7 +20,7 @@ trait Request
     {
         $raw = [
             'apiCode' => $apiCode,
-            'serialNo' => Uuid::uuid1()->toString(),
+            'serialNo' => Uuid::uuid6()->toString(),
             'signature' => $this->sign($data),
             'msgType' => $this->config->msgType,
             'logistics_interface' => json_encode($data, JSON_UNESCAPED_UNICODE),
