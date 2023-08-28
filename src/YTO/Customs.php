@@ -120,7 +120,7 @@ class Customs extends Base
             'currency' => '142',
             'weight' => $this->data->getProductWeight(),
             'packNo' => 1,
-            'goodsInfo' => $this->data->getProductName(),
+            'goodsInfo' => mb_substr($this->data->getProductName(), 0, 90),
             'consignee' => $this->data->getReceiver()->name,
             'consigneeAddress' => $this->data->getReceiver()->getAllAddress(),
             'consigneeTelephone' => $this->data->getReceiver()->mobile,
