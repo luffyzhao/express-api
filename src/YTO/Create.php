@@ -9,9 +9,9 @@ use LExpress\Response;
 class Create extends Base
 {
     // 沙箱环境的地址
-    protected $sBoxUrl = 'https://openuat.yto56test.com:6443/open/privacy_create_adapter/v1/Ef4kfE/K21000119';
+    protected $sBoxUrl = 'https://openuat.yto56test.com:6443/open/privacy_create_adapter';
     // 生产环境的地址
-    protected $prodUrl = 'https://openapi.yto.net.cn:11443/open/privacy_create_adapter/v1/Ef4kfE/K73024429';
+    protected $prodUrl = 'https://openapi.yto.net.cn:11443/open/privacy_create_adapter';
 
     /**
      * @param ConfigInterFace $config
@@ -33,12 +33,14 @@ class Create extends Base
             'format' => 'JSON'
         ];
 
-        $sign= $param . "privacy_create_adapter" . $this->config->version . $this->config->secretKey;
+        $sign = $param . "privacy_create_adapter" . $this->config->version . $this->config->secretKey;
 
         $data['sign'] = $this->encryptSignForOpen($sign);
 
-        $response = $this->post($this->getUrl(), $data);
-        if(!array_key_exists('mailNo', $response)){
+        $url = $this->getUrl() . "/" . $this->config->version . "/" . $this->config->urlPath;
+
+        $response = $this->post($url, $data);
+        if (!array_key_exists('mailNo', $response)) {
             return new Response(false, $response['reason'] ?? ($response['apiErrorMsg'] ?? ""));
         }
 

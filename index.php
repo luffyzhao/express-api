@@ -14,8 +14,8 @@ include_once __DIR__ . '/vendor/autoload.php';
 
 $config = new Config();
 $config->isSBox = false;
-$config->secretKey = "5361Wk9f";
-$config->customerCode = 'K73024429';
+$config->secretKey = "u2Z1F7Fh";
+$config->customerCode = 'K9991024989';
 $config->clientSecret = "ZH0Vb7G9cAlw3UhQ9utG6FT6mGAtw0d7aZz9pLbUxb4";
 $config->clientKey = 'YA07300001';
 
