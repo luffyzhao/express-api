@@ -24,6 +24,12 @@ class Config implements ConfigInterFace
     public $channelCode = "CN073101";
     /** @var int 跨境运单申报appType */
     public $appType = 1;
+    /**
+     * @var string
+     */
     public $logisticsCode = '331698Z002';
+    /**
+     * @var string
+     */
     public $logisticsName = '上海圆通国际货物运输代理有限公司杭州分公司';
 }
